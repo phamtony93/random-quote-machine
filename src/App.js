@@ -1,19 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './App.scss';
-// import Button from 'react-bulma-components/lib/components/button';
-// import Columns from 'react-bulma-components/lib/components/columns';
-// // import Column from 'react-bulma-components/lib/components/';
-// import Container from 'react-bulma-components/lib/components/container'
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-
-// function ExternalButton() {
-//   return (
-//     <Button className="is-primary">Go</Button>
-//   )
-// }
 
 function App() {
   let [hasQuote, setHasQuote] = useState(false)
@@ -50,18 +40,6 @@ function App() {
       })    
   }
 
-  // return (
-  //   <Container id="app">
-  //     <Row>
-  //       {displayContents(hasQuote, quote)}
-  //     </Row>
-  //     <Row>
-  //       <Button>Tweet</Button>
-  //       <Button>Tumblr</Button>
-  //       <Button onClick={getQuote} >New Quote</Button>
-  //     </Row>
-  //   </Container>
-  // );
   return (
     <Container id="app">
       <div id="quote-machine">
