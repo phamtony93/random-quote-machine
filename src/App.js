@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.scss';
 // import Button from 'react-bulma-components/lib/components/button';
 // import Columns from 'react-bulma-components/lib/components/columns';
@@ -22,42 +22,67 @@ function App() {
     title: 'test',
     link: ''
   })
+  let [randomIndex, setRandomIndex] = useState(null)
+
+  const getNonRepeatingRandomIndex = (length) => {
+    let newIndex = Math.floor(Math.random() * length)
+    while (newIndex === randomIndex) {
+      newIndex = Math.floor(Math.random() * length)
+    }
+    return newIndex
+  }
+
+  const getQuote = () => {
+    const END_POINT = 'https://quotesondesign.com/wp-json/wp/v2/posts/'
+    const request = new Request(END_POINT)
+    fetch(request)
+      .then(response => response.json())
+      .then(data =>  {
+        let random = getNonRepeatingRandomIndex(data.length)
+        let quoteData = data[random]
+        let newQuote = quote
+        newQuote.contents = removeHtmlFromString(quoteData.content.rendered)
+        newQuote.title = quoteData.title.rendered
+        newQuote.link = quoteData.link
+        setRandomIndex(random)
+        setQuote(newQuote)
+        setHasQuote(true)
+      })    
+  }
+
   return (
-    <Container className="app">
+    <Container id="app">
       <Row>
-        quote
-        {quote.contents}
+        {displayContents(hasQuote, quote)}
       </Row>
       <Row>
         <Button>Tweet</Button>
         <Button>Tumblr</Button>
-        <Button onClick={changeQuote} >New Quote</Button>
+        <Button onClick={getQuote} >New Quote</Button>
       </Row>
     </Container>
   );
 }
 
-let changeQuote = () => {
-  const END_POINT = 'https://quotesondesign.com/wp-json/wp/v2/posts/'
-  const request = new Request(END_POINT)
-  fetch(request)
-    .then(response => response.json())
-    .then(data =>  {
-      console.log(data)
-    })
+const removeHtmlFromString = (string) => {
+  return string.replace(/(<([^>]+)>)/ig, '')
 }
-// displayContents = () => {
-//   if (hasQuote) {
-//     return (
-//       <div>
 
-//       </div>
-//     )
-//   } else {
-//     return (
-      
-//     )
-//   }
-// }
+const displayContents = (hasQuote, quote) => {
+  if (hasQuote) {
+    return (
+      <div>
+        {quote.contents}
+        {quote.title}
+      </div>
+    )
+  } else {
+    return (
+      <div>
+        Please generate a new quote
+      </div>
+    )
+  }
+}
 
 export default App;
