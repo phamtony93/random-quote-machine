@@ -1,8 +1,22 @@
-// @import "~react-bulma-components/src/index.sass";
 @import "~bootstrap/scss/bootstrap";
+
 #app {
   text-align: center;
-  background-color: rgb(37, 95, 129);
+  background-color: #255f81;
   width: 100vw;
   height: 100vh;
+}
+
+.button {
+  padding: 10px !important;
+}
+
+.contents {
+  color: white;
+}
+
+#quote-machine {
+  border: solid;
+  border-color: white;
+  padding: 20px;
 }
